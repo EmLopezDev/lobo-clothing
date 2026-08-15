@@ -13,13 +13,11 @@ const Navigation = () => {
                     <WolfIcon className="logo" />
                 </Link>
                 <ul className="nav-links-container">
-                    <li>
-                        <Link
-                            className="nav-link"
-                            to="/shop"
-                        >
-                            SHOP
-                        </Link>
+                    <li className="nav-link">
+                        <Link to="/shop">SHOP</Link>
+                    </li>
+                    <li className="nav-link">
+                        <Link to="/sign-in">SIGN IN</Link>
                     </li>
                 </ul>
             </nav>
