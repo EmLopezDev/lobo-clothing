@@ -3,6 +3,7 @@ import {
     createAuthUserWithEmailAndPassword,
     createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase";
+import FormInput from "../form-input/form-input";
 
 const defaultFormFields = {
     displayName: "",
@@ -32,7 +33,7 @@ const SignUpForm = () => {
             if (error.code === "auth/email-already-in-use") {
                 alert("Cannot create user, email already in use");
             } else {
-                console.log("User creation encountered an error", error.message);
+                console.error("User creation encountered an error", error.message);
             }
         }
     };
@@ -49,8 +50,8 @@ const SignUpForm = () => {
                 action=""
                 onSubmit={handleSubmitForm}
             >
-                <label htmlFor="">Display Name</label>
-                <input
+                <FormInput
+                    label="Display Name"
                     type="text"
                     onChange={handleChange}
                     name="displayName"
@@ -58,8 +59,8 @@ const SignUpForm = () => {
                     required
                 />
 
-                <label htmlFor="">Email</label>
-                <input
+                <FormInput
+                    label="Email"
                     type="email"
                     onChange={handleChange}
                     name="email"
@@ -67,8 +68,8 @@ const SignUpForm = () => {
                     required
                 />
 
-                <label htmlFor="">Password</label>
-                <input
+                <FormInput
+                    label="Password"
                     type="password"
                     onChange={handleChange}
                     name="password"
@@ -76,8 +77,8 @@ const SignUpForm = () => {
                     required
                 />
 
-                <label htmlFor="">Confirm Password</label>
-                <input
+                <FormInput
+                    label="Confirm Password"
                     type="password"
                     onChange={handleChange}
                     name="confirmPassword"
