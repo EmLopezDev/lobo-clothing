@@ -6,12 +6,7 @@ import WolfIcon from "../../assets/wolf-howl.svg?react";
 import "./navigation.scss";
 
 const Navigation = () => {
-    const { currentUser, setCurrentUser } = useContext(UserContext);
-
-    const signOutHandler = async () => {
-        await signOutUser();
-        setCurrentUser(null);
-    };
+    const { currentUser } = useContext(UserContext);
 
     return (
         <>
@@ -29,7 +24,7 @@ const Navigation = () => {
                     {currentUser ? (
                         <li
                             className="nav-link"
-                            onClick={signOutHandler}
+                            onClick={signOutUser}
                         >
                             SIGN OUT
                         </li>
