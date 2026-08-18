@@ -1,13 +1,16 @@
 import { useContext } from "react";
 import { Outlet, Link } from "react-router-dom";
 import { UserContext } from "../../context/user-context/user-context";
+import { CartContext } from "../../context/cart-context/cart-context";
 import { signOutUser } from "../../utils/firebase/firebase";
+import CartDropdown from "../../components/cart-dropdown/cart-dropdown";
 import CartIcon from "../../components/cart-icon/cart-icon";
 import WolfIcon from "../../assets/wolf-howl.svg?react";
 import "./navigation.scss";
 
 const Navigation = () => {
     const { currentUser } = useContext(UserContext);
+    const { isCartOpen } = useContext(CartContext);
 
     return (
         <>
@@ -38,6 +41,7 @@ const Navigation = () => {
                         <CartIcon />
                     </li>
                 </ul>
+                {isCartOpen && <CartDropdown />}
             </nav>
             <Outlet />
         </>
