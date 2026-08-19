@@ -10,7 +10,7 @@ const Shop = () => {
             {products &&
                 products.map((product) => (
                     <ProductCard
-                        key={product.key}
+                        key={product.id}
                         product={product}
                     />
                 ))}
