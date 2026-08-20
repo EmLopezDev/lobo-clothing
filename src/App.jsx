@@ -3,6 +3,7 @@ import Navigation from "./routes/navigation/navigation";
 import Home from "./routes/home/home";
 import Authentication from "./routes/authentication/authentication";
 import Shop from "./routes/shop/shop";
+import CheckOut from "./routes/check-out/check-out";
 
 const App = () => {
     return (
@@ -22,6 +23,10 @@ const App = () => {
                 <Route
                     path="auth"
                     element={<Authentication />}
+                />
+                <Route
+                    path="check-out"
+                    element={<CheckOut />}
                 />
             </Route>
         </Routes>
