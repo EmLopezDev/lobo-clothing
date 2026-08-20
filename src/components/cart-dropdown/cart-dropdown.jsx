@@ -17,7 +17,7 @@ const CartDropdown = () => {
                         />
                     ))
                 ) : (
-                    <span>Your cart is empty</span>
+                    <span className="empty-message">Your cart is empty</span>
                 )}
             </div>
             <Button>Go to checkout</Button>
