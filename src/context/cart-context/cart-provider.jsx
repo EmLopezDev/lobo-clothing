@@ -1,4 +1,4 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useMemo } from "react";
 import { CartContext } from "./cart-context";
 
 const addOrUpdateCartItem = (cartItems, productToAdd) => {
@@ -36,13 +36,21 @@ export const CartProvider = ({ children }) => {
     const [isCartOpen, setIsCartOpen] = useState(false);
     const [cartItems, setCartItems] = useState([]);
 
-    const cartCount = cartItems.reduce((acc, item) => {
-        return acc + item.quantity;
-    }, 0);
+    const cartCount = useMemo(
+        () =>
+            cartItems.reduce((acc, item) => {
+                return acc + item.quantity;
+            }, 0),
+        [cartItems],
+    );
 
-    const cartTotal = cartItems.reduce((acc, item) => {
-        return acc + item.price * item.quantity;
-    }, 0);
+    const cartTotal = useMemo(
+        () =>
+            cartItems.reduce((acc, item) => {
+                return acc + item.price * item.quantity;
+            }, 0),
+        [cartItems],
+    );
 
     const addItemToCart = useCallback(
         (productToAdd) => {
@@ -65,16 +73,28 @@ export const CartProvider = ({ children }) => {
         [cartItems],
     );
 
-    const value = {
-        cartItems,
-        cartCount,
-        cartTotal,
-        isCartOpen,
-        setIsCartOpen,
-        addItemToCart,
-        decrementItemInCart,
-        clearItemFromCart,
-    };
+    const value = useMemo(
+        () => ({
+            cartItems,
+            cartCount,
+            cartTotal,
+            isCartOpen,
+            setIsCartOpen,
+            addItemToCart,
+            decrementItemInCart,
+            clearItemFromCart,
+        }),
+        [
+            cartItems,
+            cartCount,
+            cartTotal,
+            isCartOpen,
+            setIsCartOpen,
+            addItemToCart,
+            decrementItemInCart,
+            clearItemFromCart,
+        ],
+    );
 
     return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };

@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from "react";
+import { useCallback, useEffect, useReducer } from "react";
 import { UserContext } from "./user-context";
 import { USER_ACTION_TYPES } from "./user-actions";
 import {
@@ -27,9 +27,9 @@ const userReducer = (state, action) => {
 export const UserProvider = ({ children }) => {
     const [{ currentUser }, dispatch] = useReducer(userReducer, INITIAL_STATE);
 
-    const setCurrentUser = (user) => {
+    const setCurrentUser = useCallback((user) => {
         dispatch({ type: USER_ACTION_TYPES.SET_CURRENT_USER, payload: user });
-    };
+    }, []);
 
     useEffect(() => {
         const unsubscribe = onAuthStateChangedListener((user) => {
@@ -38,8 +38,8 @@ export const UserProvider = ({ children }) => {
             }
             setCurrentUser(user);
         });
-        return () => unsubscribe;
-    }, []);
+        return unsubscribe;
+    }, [setCurrentUser]);
 
     const value = {
         currentUser,
