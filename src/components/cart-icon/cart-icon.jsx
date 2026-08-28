@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { selectCartCount, selectIsCartOpen } from "../../store/cart/cart-selector";
-import { setIsCartOpen } from "../../store/cart/cart-actions";
+import { setIsCartOpen } from "../../store/cart/cart-reducer";
 import ShoppingIcon from "../../assets/shopping-bag.svg?react";
 import "./cart-icon.scss";
 
