@@ -1,6 +1,18 @@
 import "./cart-item.scss";
 
-const CartItem = ({ cartItem }) => {
+export type Item = {
+    id: string;
+    name: string;
+    price: number;
+    imageUrl: string;
+    quantity: number;
+};
+
+type CartItemProps = {
+    cartItem: Omit<Item, "id">;
+};
+
+const CartItem = ({ cartItem }: CartItemProps) => {
     const { name, price, imageUrl, quantity } = cartItem;
     return (
         <div className="cart-item-container">
