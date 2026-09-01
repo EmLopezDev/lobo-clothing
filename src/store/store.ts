@@ -22,7 +22,9 @@ const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
     reducer: persistedReducer,
     middleware: (getDefaultMiddleware) => {
-        const middleware = getDefaultMiddleware();
+        const middleware = getDefaultMiddleware({
+            serializableCheck: false,
+        });
 
         if (!import.meta.env.PROD) {
             middleware.push(logger);
@@ -35,4 +37,3 @@ export const store = configureStore({
 export const persistor = persistStore(store);
 
 export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = typeof store.dispatch;

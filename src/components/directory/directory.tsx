@@ -1,7 +1,12 @@
 import DirectoryItem from "../directory-item/directory-item";
+import { type DirectoryCategory } from "../../routes/home/home";
 import "./directory.scss";
 
-const Directory = ({ categories }) => {
+type DirectoryProps = {
+    categories: DirectoryCategory[];
+};
+
+const Directory = ({ categories }: DirectoryProps) => {
     return (
         <div className="directory-container">
             {categories.map((category) => (

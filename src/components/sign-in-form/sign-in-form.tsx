@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, type SubmitEvent, type ChangeEvent } from "react";
 import {
     signInWithGooglePopup,
     signInAuthUserWithEmailAndPassword,
 } from "../../utils/firebase/firebase";
+import { FirebaseError } from "firebase/app";
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import "./sign-in-form.scss";
@@ -24,22 +25,26 @@ const SignInForm = () => {
         await signInWithGooglePopup();
     };
 
-    const handleSubmitForm = async (event) => {
+    const handleSubmitForm = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         if (!email && !password.length) return;
         try {
             await signInAuthUserWithEmailAndPassword(email, password);
             resetFormFields();
         } catch (error) {
-            if (error.code === "auth/invalid-credential") {
-                alert("Invalid credentials");
-            } else {
+            if (error instanceof FirebaseError) {
+                if (error.code === "auth/invalid-credential") {
+                    alert("Invalid credentials");
+                }
+            }
+
+            if (error instanceof Error) {
                 console.error("User sign in encountered an error", error.message);
             }
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormFields({ ...formFields, [name]: value });
     };

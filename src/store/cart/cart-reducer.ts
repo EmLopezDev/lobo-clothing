@@ -1,11 +1,19 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { addCartItem, removeCartItem, clearCartItem } from "./cart-helper";
-import { type Item } from "../../components/cart-item/cart-item";
+import { type CategoryItem } from "../categories/categories-reducer";
 import { type PayloadAction } from "@reduxjs/toolkit";
+
+export type CartItem = {
+    id: number;
+    name: string;
+    price: number;
+    imageUrl: string;
+    quantity: number;
+};
 
 type CartState = {
     isCartOpen: boolean;
-    cartItems: Item[];
+    cartItems: CartItem[];
 };
 
 const CART_INITIAL_STATE: CartState = {
@@ -20,13 +28,13 @@ export const cartSlice = createSlice({
         setIsCartOpen: (state, action: PayloadAction<boolean>) => {
             state.isCartOpen = action.payload;
         },
-        addItemToCart: (state, action: PayloadAction<Item>) => {
+        addItemToCart: (state, action: PayloadAction<CategoryItem>) => {
             state.cartItems = addCartItem(state.cartItems, action.payload);
         },
-        removeItemFromCart: (state, action: PayloadAction<Item>) => {
+        removeItemFromCart: (state, action: PayloadAction<CategoryItem>) => {
             state.cartItems = removeCartItem(state.cartItems, action.payload);
         },
-        clearItemFromCart: (state, action: PayloadAction<Item>) => {
+        clearItemFromCart: (state, action: PayloadAction<CategoryItem>) => {
             state.cartItems = clearCartItem(state.cartItems, action.payload);
         },
     },

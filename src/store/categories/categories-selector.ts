@@ -1,4 +1,5 @@
 import { createSelector } from "@reduxjs/toolkit";
+import { type Categories } from "./categories-reducer";
 import type { RootState } from "../store";
 
 const selectCategoriesReducer = (state: RootState) => state.categories;
@@ -9,11 +10,8 @@ export const selectCategories = createSelector(
 );
 
 export const selectCategoriesArray = createSelector([selectCategories], (categories) => {
-    return categories.reduce(
-        (acc, { title, items }) => {
-            acc[title.toLowerCase()] = items;
-            return acc;
-        },
-        {} as Record<string, any>,
-    );
+    return categories.reduce((acc, { title, items }) => {
+        acc[title.toLowerCase()] = items;
+        return acc;
+    }, {} as Categories);
 });

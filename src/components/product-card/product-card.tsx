@@ -1,9 +1,14 @@
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "../../store/cart/cart-reducer";
+import { type CategoryItem } from "../../store/categories/categories-reducer";
 import Button from "../button/button";
 import "./product-card.scss";
 
-const ProductCard = ({ product }) => {
+type ProductCardProps = {
+    product: CategoryItem;
+};
+
+const ProductCard = ({ product }: ProductCardProps) => {
     const { name, price, imageUrl } = product;
 
     const dispatch = useDispatch();

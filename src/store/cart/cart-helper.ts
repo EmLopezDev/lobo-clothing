@@ -1,6 +1,7 @@
-import { type Item } from "../../components/cart-item/cart-item";
+import { type CartItem } from "./cart-reducer";
+import { type CategoryItem } from "../categories/categories-reducer";
 
-export const addCartItem = (cartItems: Item[], productToAdd: Item) => {
+export const addCartItem = (cartItems: CartItem[], productToAdd: CategoryItem) => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === productToAdd.id);
 
     if (existingCartItem) {
@@ -14,7 +15,7 @@ export const addCartItem = (cartItems: Item[], productToAdd: Item) => {
     return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
 
-export const removeCartItem = (cartItems: Item[], cartItemToRemove: Item) => {
+export const removeCartItem = (cartItems: CartItem[], cartItemToRemove: CategoryItem) => {
     const existingCartItem = cartItems.find((cartItem) => cartItem.id === cartItemToRemove.id);
 
     if (existingCartItem?.quantity === 1) {
@@ -28,5 +29,5 @@ export const removeCartItem = (cartItems: Item[], cartItemToRemove: Item) => {
     );
 };
 
-export const clearCartItem = (cartItems: Item[], cartItemToClear: Item) =>
+export const clearCartItem = (cartItems: CartItem[], cartItemToClear: CategoryItem) =>
     cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);

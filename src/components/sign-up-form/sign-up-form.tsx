@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, type SubmitEvent, type ChangeEvent } from "react";
 import {
     createAuthUserWithEmailAndPassword,
     createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase";
+import { FirebaseError } from "firebase/app";
 import FormInput from "../form-input/form-input";
 import Button from "../button/button";
 import "./sign-up-form.scss";
@@ -22,25 +23,34 @@ const SignUpForm = () => {
         setFormFields(defaultFormFields);
     };
 
-    const handleSubmitForm = async (event) => {
+    const handleSubmitForm = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         const validPassword =
             password.toLowerCase().trim() === confirmPassword.toLowerCase().trim();
         if (!displayName && !email && !password.length && !validPassword) return;
         try {
-            const { user } = await createAuthUserWithEmailAndPassword(email, password);
+            const userCredential = await createAuthUserWithEmailAndPassword(email, password);
+
+            if (!userCredential) {
+                return;
+            }
+
+            const { user } = userCredential;
             await createUserDocumentFromAuth(user, { displayName });
             resetFormFields();
         } catch (error) {
-            if (error.code === "auth/email-already-in-use") {
-                alert("Cannot create user, email already in use");
-            } else {
+            if (error instanceof FirebaseError) {
+                if (error.code === "auth/email-already-in-use") {
+                    alert("Cannot create user, email already in use");
+                }
+            }
+            if (error instanceof Error) {
                 console.error("User creation encountered an error", error.message);
             }
         }
     };
 
-    const handleChange = (event) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = event.target;
         setFormFields({ ...formFields, [name]: value });
     };

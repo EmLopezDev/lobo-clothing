@@ -8,7 +8,7 @@ const CategoriesPreview = () => {
     return (
         <>
             {Object.keys(categories).map((title) => {
-                const products = categories[title];
+                const products = categories[title] ?? [];
                 return (
                     <CategoryPreview
                         key={title}

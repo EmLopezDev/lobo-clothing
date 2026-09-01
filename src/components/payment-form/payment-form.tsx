@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, type SubmitEvent } from "react";
 import { useSelector } from "react-redux";
 import { selectCartTotal } from "../../store/cart/cart-selector";
 import { selectCurrentUser } from "../../store/user/user-selector";
@@ -14,11 +14,15 @@ export const PaymentForm = () => {
     const amount = useSelector(selectCartTotal);
     const currentUser = useSelector(selectCurrentUser);
 
-    const paymentHandler = async (event) => {
+    const paymentHandler = async (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
-        if (!stripe || !elements) return;
-        setIsProcessing(true);
+
+        const cardElement = elements?.getElement(CardElement);
+
+        if (!stripe || !elements || !cardElement) return;
+
         try {
+            setIsProcessing(true);
             const response = await fetch("/.netlify/functions/create-payment-intent", {
                 method: "POST",
                 headers: {
@@ -30,7 +34,7 @@ export const PaymentForm = () => {
             const clientSecret = response.client_secret;
             const paymentResult = await stripe.confirmCardPayment(clientSecret, {
                 payment_method: {
-                    card: elements.getElement(CardElement),
+                    card: cardElement,
                     billing_details: {
                         name: currentUser ? currentUser.displayName : "Guest",
                     },

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { type PayloadAction } from "@reduxjs/toolkit";
 
 export type CategoryItem = {
-    id: string;
+    id: number;
     name: string;
     imageUrl: string;
     price: number;
@@ -10,11 +10,16 @@ export type CategoryItem = {
 
 export type Category = {
     title: string;
+    imageUrl: string;
     items: CategoryItem[];
 };
 
+export type Categories = {
+    [key: string]: CategoryItem[];
+};
+
 type CategoriesState = {
-    categories: Category[];
+    readonly categories: Category[];
 };
 
 export const CATEGORIES_INITIAL_STATE: CategoriesState = {

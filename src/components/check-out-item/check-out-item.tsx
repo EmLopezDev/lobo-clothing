@@ -4,9 +4,14 @@ import {
     clearItemFromCart,
     removeItemFromCart,
 } from "../../store/cart/cart-reducer";
+import { type CartItem } from "../../store/cart/cart-reducer";
 import "./check-out-item.scss";
 
-const CheckOutItem = ({ cartItem }) => {
+type CheckoutItemProps = {
+    cartItem: CartItem;
+};
+
+const CheckOutItem = ({ cartItem }: CheckoutItemProps) => {
     const { name, quantity, imageUrl, price } = cartItem;
 
     const dispatch = useDispatch();

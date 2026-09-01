@@ -1,12 +1,5 @@
+import { type CartItem as Item } from "../../store/cart/cart-reducer";
 import "./cart-item.scss";
-
-export type Item = {
-    id: string;
-    name: string;
-    price: number;
-    imageUrl: string;
-    quantity: number;
-};
 
 type CartItemProps = {
     cartItem: Omit<Item, "id">;

@@ -7,12 +7,12 @@ const BUTTON_TYPES_CLASSES = {
     inverted: "inverted",
 };
 
-type ButtonProps = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: ReactNode;
     buttonType?: "google" | "inverted";
     disabled?: boolean;
     isLoading?: boolean;
-    onClick: MouseEventHandler<HTMLButtonElement>;
+    onClick?: MouseEventHandler<HTMLButtonElement>;
 };
 
 const Button = ({
@@ -26,7 +26,7 @@ const Button = ({
     return (
         <button
             className={`button-container ${buttonType && BUTTON_TYPES_CLASSES[buttonType]}`}
-            onClick={(e) => onClick(e)}
+            onClick={onClick}
             disabled={isLoading || disabled}
             {...otherProps}
         >

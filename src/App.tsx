@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { Routes, Route } from "react-router-dom";
 import { onAuthStateChangedListener, createUserDocumentFromAuth } from "./utils/firebase/firebase";
 import { setCurrentUser } from "./store/user/user-reducer";
+import { type User } from "firebase/auth";
 import Navigation from "./routes/navigation/navigation";
 import Home from "./routes/home/home";
 import Authentication from "./routes/authentication/authentication";
@@ -13,13 +14,11 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChangedListener((user: any) => {
+        const unsubscribe = onAuthStateChangedListener((user?: User | null) => {
             if (user) {
                 createUserDocumentFromAuth(user);
             }
-            const pickedUser = user && (({ accessToken, email }) => ({ accessToken, email }))(user);
-
-            dispatch(setCurrentUser(pickedUser));
+            dispatch(setCurrentUser(user ?? null));
         });
         return unsubscribe;
     }, [dispatch]);

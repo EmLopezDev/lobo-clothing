@@ -1,6 +1,12 @@
 import Directory from "../../components/directory/directory";
 
-const categories = [
+export type DirectoryCategory = {
+    id: number;
+    title: string;
+    imageUrl: string;
+};
+
+const categories: DirectoryCategory[] = [
     {
         id: 1,
         title: "hats",
