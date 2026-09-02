@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { type User } from "firebase/auth";
 import { type PayloadAction } from "@reduxjs/toolkit";
+import { type User } from "firebase/auth";
 
 type UserState = {
-    currentUser: User | null;
+    readonly currentUser: User | null;
 };
 
 const USER_INITIAL_STATE: UserState = {

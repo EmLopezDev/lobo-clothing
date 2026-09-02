@@ -1,9 +1,11 @@
 import { rootReducer } from "./root-reducer";
 import { createLogger } from "redux-logger";
-import { persistReducer, persistStore } from "redux-persist";
+import { persistReducer, persistStore, type PersistConfig } from "redux-persist";
 import { configureStore } from "@reduxjs/toolkit";
 
 const logger = createLogger();
+
+export type RootState = ReturnType<typeof rootReducer>;
 
 const customWebStorage = {
     getItem: (key: string) => Promise.resolve(localStorage.getItem(key)),
@@ -11,10 +13,14 @@ const customWebStorage = {
     removeItem: (key: string) => Promise.resolve(localStorage.removeItem(key)),
 };
 
-const persistConfig = {
+type ExtendedPersistConfig = PersistConfig<RootState> & {
+    whitelist: (keyof RootState)[];
+};
+
+const persistConfig: ExtendedPersistConfig = {
     key: "root",
     storage: customWebStorage,
-    blacklist: ["user"],
+    whitelist: ["cart"],
 };
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
@@ -35,5 +41,3 @@ export const store = configureStore({
 });
 
 export const persistor = persistStore(store);
-
-export type RootState = ReturnType<typeof rootReducer>;

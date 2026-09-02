@@ -14,11 +14,12 @@ const App = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChangedListener((user?: User | null) => {
+        const unsubscribe = onAuthStateChangedListener((user: User | null) => {
             if (user) {
                 createUserDocumentFromAuth(user);
             }
-            dispatch(setCurrentUser(user ?? null));
+
+            dispatch(setCurrentUser(user));
         });
         return unsubscribe;
     }, [dispatch]);
