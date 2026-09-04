@@ -6,14 +6,16 @@ import { type CategoryItem } from "../../store/categories/categories-reducer";
 import ProductCard from "../../components/product-card/product-card";
 import "./category.scss";
 
+type CategoryRouteParams = {
+    category: string;
+};
+
 const Category = () => {
-    const { category } = useParams();
+    const { category } = useParams<keyof CategoryRouteParams>() as CategoryRouteParams;
     const categories = useSelector(selectCategoriesArray);
     const [products, setProducts] = useState<CategoryItem[]>([]);
 
     useEffect(() => {
-        if (!category) return;
-
         const getProducts = () => {
             setProducts(categories[category] ?? []);
         };
