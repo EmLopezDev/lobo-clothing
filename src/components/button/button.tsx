@@ -2,14 +2,15 @@ import { type ReactNode, type MouseEventHandler } from "react";
 import Loader from "../loader/loader";
 import "./button.scss";
 
-const BUTTON_TYPES_CLASSES = {
-    google: "google-sign-in",
-    inverted: "inverted",
-};
+enum BUTTON_TYPES_CLASSES {
+    base = "base",
+    google = "google-sign-in",
+    inverted = "inverted",
+}
 
 type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
     children: ReactNode;
-    buttonType?: "google" | "inverted";
+    buttonType?: "base" | "google" | "inverted";
     disabled?: boolean;
     isLoading?: boolean;
     onClick?: MouseEventHandler<HTMLButtonElement>;
@@ -17,7 +18,7 @@ type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
 
 const Button = ({
     children,
-    buttonType,
+    buttonType = "base",
     disabled,
     isLoading,
     onClick,
@@ -25,7 +26,7 @@ const Button = ({
 }: ButtonProps) => {
     return (
         <button
-            className={`button-container ${buttonType && BUTTON_TYPES_CLASSES[buttonType]}`}
+            className={`button-container ${BUTTON_TYPES_CLASSES[buttonType]}`}
             onClick={onClick}
             disabled={isLoading || disabled}
             {...otherProps}
